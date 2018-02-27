@@ -1,3 +1,5 @@
+package lab3;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -25,8 +27,8 @@ public class ShortRoute extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	// all needs to be visible outside the constructor
-	NodeTable<BusStop>      noderna  = new NodeTable<BusStop>();
-	DirectedGraph<BusEdge>  grafen; 
+	NodeTable<BusStop> noderna  = new NodeTable<BusStop>();
+	DirectedGraph<BusEdge>  grafen;
 	PriorityQueue<String>   names;
 	JTextField              from     = new JTextField("", 20);
 	JTextField              to       = new JTextField("", 20);
