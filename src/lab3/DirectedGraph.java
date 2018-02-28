@@ -63,7 +63,44 @@ public class DirectedGraph<E extends Edge> {
 	}
 		
 	public Iterator<E> minimumSpanningTree() {
-		return null;
+
+		List<E>[]cc = new LinkedList[edgeArray.length];
+
+		//1. Skapa en array med booleans som representerar huruvida noden är en del av trädet //False från början
+		boolean[] nodeIsIncluded = new boolean[edgeArray.length];
+		for (boolean nodeStatus : nodeIsIncluded) {
+			nodeStatus = false;
+		}
+		//2. Lista över included edges
+		List<E> mst =  new LinkedList<>();
+
+		//2. Skapa en priorityqueue med Kruskal-element
+		PriorityQueue<KruskalElement> kruskalQueue = new PriorityQueue<KruskalElement>();
+		for (List<E> edgeList: edgeArray) {
+			for (E edge : edgeList) {
+				kruskalQueue.add(new KruskalElement(edge));
+			}
+
+		}
+		while(!kruskalQueue.isEmpty()){ //TODO annan check? se om alla noder är valda
+			E currentEdge = (E)kruskalQueue.poll().getEdge(); //TODO fulcast
+			if(!(nodeIsIncluded[currentEdge.to] && nodeIsIncluded[currentEdge.from])){
+				mst.add(currentEdge);
+				nodeIsIncluded[currentEdge.to] = true;
+				nodeIsIncluded[currentEdge.from] = true;
+			}
+
+			//Kolla om båda noderna är true i vår array
+			//Om inte, lägg till i trädet
+			//annars kasta
+		}
+
+
+		//3. Lägg till det första elementet ifrån PriorityQueuen, om båda noderna inte redan är true i array 1.
+
+		//4. Upprepa 3 tills priorityqueuen är tom?
+
+		return mst.iterator();
 	}
 
 }
