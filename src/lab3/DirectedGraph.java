@@ -81,25 +81,24 @@ public class DirectedGraph<E extends Edge> {
 			}
 
 		}
-		while(!kruskalQueue.isEmpty()){ //TODO annan check? se om alla noder är valda
-			E currentEdge = kruskalQueue.poll().getEdge(); 
+		while(!allNodesSelected(nodeIsIncluded)){ //TODO annan check? se om alla noder är valda. klar men är detta bästa alternativ?
+			E currentEdge = kruskalQueue.poll().getEdge();
 			if(!(nodeIsIncluded[currentEdge.to] && nodeIsIncluded[currentEdge.from])){
 				mst.add(currentEdge);
 				nodeIsIncluded[currentEdge.to] = true;
 				nodeIsIncluded[currentEdge.from] = true;
 			}
-
-			//Kolla om båda noderna är true i vår array
-			//Om inte, lägg till i trädet
-			//annars kasta
 		}
 
-
-		//3. Lägg till det första elementet ifrån PriorityQueuen, om båda noderna inte redan är true i array 1.
-
-		//4. Upprepa 3 tills priorityqueuen är tom?
-
 		return mst.iterator();
+	}
+
+	private boolean allNodesSelected(boolean[] nodes){
+		for (boolean node : nodes){
+			if (!node)
+				return false;
+		}
+		return true;
 	}
 
 }
