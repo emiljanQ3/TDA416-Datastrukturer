@@ -19,7 +19,7 @@ public class DirectedGraph<E extends Edge> {
 
 	public Iterator<E> shortestPath(int from, int to) {
 		//Create djikstra elements for each node and set their weight to inf
-		DijkstraElement[] allElements = new DijkstraElement[edgeArray.length];
+		DijkstraElement<E>[] allElements = new DijkstraElement[edgeArray.length];
 		for (int i = 0; i<allElements.length; i++ ) {
 			allElements[i] = new DijkstraElement(null, i, Double.POSITIVE_INFINITY , null);
 		}
@@ -55,8 +55,8 @@ public class DirectedGraph<E extends Edge> {
 
 		List<E> path = new LinkedList<>();
 
-		for (DijkstraElement element = allElements[to]; element.getPrevious() != null; element = element.getPrevious()){
-			path.add(0,(E) element.getLastEdge()); //TODO think about this later
+		for (DijkstraElement<E> element = allElements[to]; element.getPrevious() != null; element = element.getPrevious()){
+			path.add(0, element.getLastEdge());
 		}
 
 		return path.iterator();
@@ -64,7 +64,6 @@ public class DirectedGraph<E extends Edge> {
 		
 	public Iterator<E> minimumSpanningTree() {
 
-		List<E>[]cc = new LinkedList[edgeArray.length];
 
 		//1. Skapa en array med booleans som representerar huruvida noden är en del av trädet //False från början
 		boolean[] nodeIsIncluded = new boolean[edgeArray.length];
@@ -75,7 +74,7 @@ public class DirectedGraph<E extends Edge> {
 		List<E> mst =  new LinkedList<>();
 
 		//2. Skapa en priorityqueue med Kruskal-element
-		PriorityQueue<KruskalElement> kruskalQueue = new PriorityQueue<KruskalElement>();
+		PriorityQueue<KruskalElement<E>> kruskalQueue = new PriorityQueue<>();
 		for (List<E> edgeList: edgeArray) {
 			for (E edge : edgeList) {
 				kruskalQueue.add(new KruskalElement(edge));
@@ -83,7 +82,7 @@ public class DirectedGraph<E extends Edge> {
 
 		}
 		while(!kruskalQueue.isEmpty()){ //TODO annan check? se om alla noder är valda
-			E currentEdge = (E)kruskalQueue.poll().getEdge(); //TODO fulcast
+			E currentEdge = kruskalQueue.poll().getEdge(); 
 			if(!(nodeIsIncluded[currentEdge.to] && nodeIsIncluded[currentEdge.from])){
 				mst.add(currentEdge);
 				nodeIsIncluded[currentEdge.to] = true;

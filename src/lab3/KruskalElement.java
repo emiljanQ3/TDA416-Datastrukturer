@@ -1,13 +1,13 @@
 package lab3;
 
-public class KruskalElement implements Comparable {
-    private Edge edge;
+public class KruskalElement<E extends Edge> implements Comparable {
+    private E edge;
 
-    public KruskalElement(Edge edge){
+    public KruskalElement(E edge){
         this.edge = edge;
     }
 
-    public Edge getEdge() {
+    public E getEdge() {
         return edge;
     }
 

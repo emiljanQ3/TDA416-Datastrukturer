@@ -1,12 +1,12 @@
 package lab3;
 
-public class DijkstraElement implements Comparable{
+public class DijkstraElement <E extends Edge> implements Comparable{
     private  DijkstraElement previous;
     private  double totalWeight;
-    private  Edge lastEdge;
+    private  E lastEdge;
     private  final int nodeIndex;
 
-    public DijkstraElement(DijkstraElement previous, int nodeIndex, double totalWeight, Edge lastEdge){
+    public DijkstraElement(DijkstraElement previous, int nodeIndex, double totalWeight, E lastEdge){
         this.previous = previous;
         this.totalWeight = totalWeight;
         this.lastEdge = lastEdge;
@@ -21,7 +21,7 @@ public class DijkstraElement implements Comparable{
         return totalWeight;
     }
 
-    public Edge getLastEdge() {
+    public E getLastEdge() {
         return lastEdge;
     }
 
@@ -37,14 +37,13 @@ public class DijkstraElement implements Comparable{
         this.totalWeight = totalWeight;
     }
 
-    public void setLastEdge(Edge lastEdge) {
+    public void setLastEdge(E lastEdge) {
         this.lastEdge = lastEdge;
     }
 
     @Override
     public int compareTo(Object o) {
         if (o.getClass().equals(this.getClass())){
-            o = (DijkstraElement) o;
             if (this.totalWeight > ((DijkstraElement) o).totalWeight)
                 return 1;
             else if (this.totalWeight < ((DijkstraElement) o).totalWeight)
