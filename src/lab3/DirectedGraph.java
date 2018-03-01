@@ -8,8 +8,8 @@ public class DirectedGraph<E extends Edge> {
 
 	public DirectedGraph(int noOfNodes) {
 		edgeArray = new LinkedList[noOfNodes];
-		for (LinkedList<E> list : edgeArray){
-			list = new LinkedList<E>();
+		for (int i = 0; i<edgeArray.length; i++){
+			edgeArray[i] = new LinkedList<E>();
 		}
 	}
 
@@ -64,15 +64,6 @@ public class DirectedGraph<E extends Edge> {
 		
 	public Iterator<E> minimumSpanningTree() {
 
-
-		//1. Skapa en array med booleans som representerar huruvida noden är en del av trädet //False från början
-		boolean[] nodeIsIncluded = new boolean[edgeArray.length];
-		for (boolean nodeStatus : nodeIsIncluded) {
-			nodeStatus = false;
-		}
-		//2. Lista över included edges
-		List<E> mst =  new LinkedList<>();
-
 		//2. Skapa en priorityqueue med Kruskal-element
 		PriorityQueue<KruskalElement<E>> kruskalQueue = new PriorityQueue<>();
 		for (List<E> edgeList: edgeArray) {
@@ -81,25 +72,55 @@ public class DirectedGraph<E extends Edge> {
 			}
 
 		}
-		while(!allNodesSelected(nodeIsIncluded)){ //TODO annan check? se om alla noder är valda. klar men är detta bästa alternativ?
+		//3. Skapa en array med kant-listor
+		List<E>[] cc = new LinkedList[edgeArray.length];
+		for ( int i = 0; i < cc.length; i++){
+			cc[i] = new LinkedList<E>();
+		}
+
+		while(!kruskalQueue.isEmpty() && ( moreThanOneList(cc))){
 			E currentEdge = kruskalQueue.poll().getEdge();
-			if(!(nodeIsIncluded[currentEdge.to] && nodeIsIncluded[currentEdge.from])){
-				mst.add(currentEdge);
-				nodeIsIncluded[currentEdge.to] = true;
-				nodeIsIncluded[currentEdge.from] = true;
+			List<E> fromList = cc[currentEdge.getSource()];
+			List<E> toList = cc[currentEdge.getDest()];
+			if(fromList != toList){
+				if ( fromList.size() >= toList.size()){
+					toList.addAll(fromList);
+					toList.add(currentEdge);
+					for(int i=0; i< cc.length;i++){
+						if(cc[i] == fromList){
+							cc[i]=toList;
+						}
+					}
+				}else {
+					fromList.addAll(toList);
+					fromList.add(currentEdge);
+					for(int i=0; i< cc.length;i++){
+						if(cc[i] == toList){
+							cc[i]=fromList;
+						}
+					}
+				}
+
+
 			}
 		}
-
-		return mst.iterator();
-	}
-
-	private boolean allNodesSelected(boolean[] nodes){
-		for (boolean node : nodes){
-			if (!node)
-				return false;
+		if(cc[0] == null){
+			System.out.println("LMAO");
 		}
-		return true;
+		return cc[0].iterator();
 	}
+
+	private boolean moreThanOneList(List<E>[] cc) {
+		List<E> firstReference = cc[0];
+		for ( int i = 0; i<cc.length; i++){
+			if (cc[i] != firstReference){
+				return true;
+			}
+
+		}
+		return  false;
+	}
+
 
 }
   

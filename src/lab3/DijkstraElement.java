@@ -53,10 +53,12 @@ public class DijkstraElement <E extends Edge> implements Comparable{
                 else
                     return 0;
             }else {
-                throw new IllegalArgumentException(){   };
+                System.out.println("Invalid argument in DijkstraEmement.compareTo");
+                return 0;
             }
         }else{
-            throw new NullPointerException();
+            System.out.println("Invalid argument in DijkstraEmement.compareTo");
+            return 0;
         }
 
     }

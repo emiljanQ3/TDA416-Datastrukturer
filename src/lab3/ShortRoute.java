@@ -321,8 +321,7 @@ public class ShortRoute extends JFrame implements ActionListener {
 										(float)Math.random());
 				for (int i = 0; i < antal; i++ ) {
 					int to = noderna.find( indata.next() ).getNodeNo();
-					grafen.addEdge(
-						new BusEdge(from, to, indata.nextInt(), lineNo ));
+					grafen.addEdge(	new BusEdge(from, to, indata.nextInt(), lineNo ));
 					// Draw
 					BusStop busFrom = noderna.find(from);
 					BusStop busTo   = noderna.find(to);

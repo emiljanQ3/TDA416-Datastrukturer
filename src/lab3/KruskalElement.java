@@ -23,11 +23,12 @@ public class KruskalElement<E extends Edge> implements Comparable {
                     return 0;
                 }
             } else {
-                throw new IllegalArgumentException() {
-                };
+                System.out.println("Invalid argument in KruskalEmement.compareTo");
+                return 0;
             }
         } else {
-            throw new NullPointerException();
+            System.out.println("Invalid argument in KruskalEmement.compareTo");
+            return 0;
         }
     }
 }
