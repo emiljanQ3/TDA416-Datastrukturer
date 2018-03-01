@@ -43,15 +43,20 @@ public class DijkstraElement <E extends Edge> implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        if (o.getClass().equals(this.getClass())){
-            if (this.totalWeight > ((DijkstraElement) o).totalWeight)
-                return 1;
-            else if (this.totalWeight < ((DijkstraElement) o).totalWeight)
-                return -1;
-            else
-                return 0;
-        }else {
-            throw new IllegalArgumentException(){   };
+        if(o != null){
+
+            if (o.getClass().equals(this.getClass())){
+                if (this.totalWeight > ((DijkstraElement) o).totalWeight)
+                    return 1;
+                else if (this.totalWeight < ((DijkstraElement) o).totalWeight)
+                    return -1;
+                else
+                    return 0;
+            }else {
+                throw new IllegalArgumentException(){   };
+            }
+        }else{
+            throw new NullPointerException();
         }
 
     }
