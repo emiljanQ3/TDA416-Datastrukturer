@@ -13,10 +13,26 @@ public class DirectedGraph<E extends Edge> {
 		}
 	}
 
+	/**
+	 * Adds an edge to the LinkedList at the index in the array corresponding
+	 * to the node which the edge originates from.
+	 *
+	 * @param e the object, which extends edge, to be added to the list
+	 */
+
 	public void addEdge(E e) {
 		edgeArray[e.getSource()].add(e);
 	}
 
+	/**
+	 * Calculates the shortest avaliable path from one node to another by using
+	 * Dijkstras Shortest Path-algorithm
+	 *
+	 * @param from the index of the node which the path originates from
+	 * @param to the index of the node the path should reach
+	 * @return an iterator of a list including all the edges used to go from node "from"
+	 * to node "to"
+	 */
 	public Iterator<E> shortestPath(int from, int to) {
 		//Create djikstra elements for each node and set their weight to inf
 		DijkstraElement<E>[] allElements = new DijkstraElement[edgeArray.length];
@@ -61,10 +77,15 @@ public class DirectedGraph<E extends Edge> {
 
 		return path.iterator();
 	}
-		
+
+	/**
+	 * Calculates the minimumSpanningTree using Kruskals algorithm
+	 *
+	 * @return an iterator of a list including all the edges used to create the minimum spanning tree.
+	 */
 	public Iterator<E> minimumSpanningTree() {
 
-		//2. Skapa en priorityqueue med Kruskal-element
+		// Skapa en priorityqueue med Kruskal-element
 		PriorityQueue<KruskalElement<E>> kruskalQueue = new PriorityQueue<>();
 		for (List<E> edgeList: edgeArray) {
 			for (E edge : edgeList) {
@@ -72,7 +93,7 @@ public class DirectedGraph<E extends Edge> {
 			}
 
 		}
-		//3. Skapa en array med kant-listor
+		// Skapa en array med kant-listor
 		List<E>[] cc = new LinkedList[edgeArray.length];
 		for ( int i = 0; i < cc.length; i++){
 			cc[i] = new LinkedList<E>();
