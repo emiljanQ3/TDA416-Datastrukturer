@@ -101,33 +101,31 @@ public class DirectedGraph<E extends Edge> {
 
 		while(!kruskalQueue.isEmpty() && ( moreThanOneList(cc))){
 			E currentEdge = kruskalQueue.poll().getEdge();
-			List<E> fromList = cc[currentEdge.getSource()];
-			List<E> toList = cc[currentEdge.getDest()];
-			if(fromList != toList){
-				if ( fromList.size() >= toList.size()){
-					toList.addAll(fromList);
-					toList.add(currentEdge);
-					for(int i=0; i< cc.length;i++){
-						if(cc[i] == fromList){
-							cc[i]=toList;
-						}
-					}
-				}else {
-					fromList.addAll(toList);
-					fromList.add(currentEdge);
-					for(int i=0; i< cc.length;i++){
-						if(cc[i] == toList){
-							cc[i]=fromList;
-						}
-					}
+			List<E> mainList = cc[currentEdge.getSource()];
+			List<E> secondaryList = cc[currentEdge.getDest()];
+			if(mainList != secondaryList){
+				if ( mainList.size() < secondaryList.size()){
+					List<E> temp = mainList;
+					mainList = secondaryList;
+					secondaryList = temp;
 				}
 
+				mainList.addAll(secondaryList);
+				mainList.add(currentEdge);
 
+				for (E edge : secondaryList){ 			//TODO this does not work :'(
+					cc[edge.getSource()] 	= mainList;
+					cc[edge.getDest()]		= mainList;
+				}
+				/*for(int i=0; i< cc.length;i++) {  	//TODO this does but gives me angry remarks from the TAs
+					if (cc[i] == secondaryList) {
+						cc[i] = mainList;
+					}
+
+				}*/
 			}
 		}
-		if(cc[0] == null){
-			System.out.println("LMAO");
-		}
+
 		return cc[0].iterator();
 	}
 
