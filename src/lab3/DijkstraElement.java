@@ -57,18 +57,13 @@ public class DijkstraElement <E extends Edge> implements Comparable<DijkstraElem
     @Override
     public int compareTo(DijkstraElement o) {
         if(o != null){
-
-            if (o.getClass().equals(this.getClass())){
-                if (this.totalWeight > o.totalWeight)
-                    return 1;
-                else if (this.totalWeight < o.totalWeight)
-                    return -1;
-                else
-                    return 0;
-            }else {
-                System.out.println("Invalid argument in DijkstraEmement.compareTo");
+            if (this.totalWeight > o.totalWeight)
+                return 1;
+            else if (this.totalWeight < o.totalWeight)
+                return -1;
+            else
                 return 0;
-            }
+
         }else{
             System.out.println("Invalid argument in DijkstraEmement.compareTo");
             return 0;

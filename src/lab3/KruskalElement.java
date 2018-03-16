@@ -14,7 +14,6 @@ public class KruskalElement<E extends Edge> implements Comparable<KruskalElement
     @Override
     public int compareTo(KruskalElement o) {
         if (o != null) {
-            if (o.getClass().equals(this.getClass())) {
                 if (this.edge.getWeight() > o.edge.getWeight()) {
                     return 1;
                 } else if (this.edge.getWeight() < o.edge.getWeight()) {
@@ -22,10 +21,7 @@ public class KruskalElement<E extends Edge> implements Comparable<KruskalElement
                 } else {
                     return 0;
                 }
-            } else {
-                System.out.println("Invalid argument in KruskalEmement.compareTo");
-                return 0;
-            }
+
         } else {
             System.out.println("Invalid argument in KruskalEmement.compareTo");
             return 0;
