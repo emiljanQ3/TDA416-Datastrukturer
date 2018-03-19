@@ -38,7 +38,7 @@ public class DirectedGraph<E extends Edge> {
 		boolean[] visited = new boolean[edgeArray.length];
 		PriorityQueue<DijkstraElement> queue = new PriorityQueue<>();
 
-		// Put initial element in que
+		// Put initial element in queue
 		queue.add(new DijkstraElement<E>(null, from, 0,null));
 
 
@@ -102,16 +102,14 @@ public class DirectedGraph<E extends Edge> {
 				mainList.addAll(secondaryList);
 				mainList.add(currentEdge);
 
-				for (E edge : secondaryList){ 			//TODO this does not work :'(
+
+				cc[currentEdge.getDest()] = mainList;
+				cc[currentEdge.getSource()] = mainList;
+				for (E edge : secondaryList){
 					cc[edge.getSource()] 	= mainList;
 					cc[edge.getDest()]		= mainList;
 				}
-				/*for(int i=0; i< cc.length;i++) {  	//TODO this does but gives me angry remarks from the TAs
-					if (cc[i] == secondaryList) {
-						cc[i] = mainList;
-					}
 
-				}*/
 			}
 		}
 
